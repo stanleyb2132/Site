@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Jornada na Fotografia</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: auto;
+      overflow-y: auto;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 2px solid #333;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+    nav {
+      background-color: #1f1f1f;
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      gap: 2px;
+      border-bottom: 1px solid #333;
+    }
+    nav a {
+      padding: 10px 20px;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease-in-out;
+    }
+    nav a:hover {
+      background-color: #3a3a3a;
+      color: rgb(255, 255, 255);
+    }
+    nav a.ativo {
+      background-color: #ffffffa6;
+      color: #000;
+      font-weight: bold;
+    }
+    main > section {
+      display: none;
+    }
+    main > section.active {
+      display: block;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+    .galeria img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.2s;
+      border: 2px solid #aaa
+    }
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .imagem-ampliada {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      border: 3px blackdrop-filter white;
+      cursor: zoom-out;
+    }
+    .camera-info {
+      background: url('imagens/3.jpeg') no-repeat center center;
+      background-size: cover;
+      padding: 40px;
+      color: white;
+      border-radius: 10px;
+      object-fit: contain;
+      overflow: visible;
+      height: 50%;
+      float: auto;
+    }
+    .camera-info img {
+      max-width: 160px;
+      height: 160px;
+      margin-top: auto;
+      border-radius: 50%;
+      object-fit: contain;
+    }
+    footer {
+      background-color: #1f1f1f;
+      text-align: center;
+      padding: 30px;
+      font-size: 14px;
+      color: #aaa;
+      border-top: 2px solid #333;
+    }
+    footer div {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    footer div section {
+      flex: 1 1 200px;
+    }
+    footer h4 { color: #fff; margin-bottom: 10px; }
+    footer a {
+      color: #aaa;
+      display: block;
+      margin-bottom: 6px;
+      text-decoration: none;
+    }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minha Jornada na Fotografia</h1>
+  </header>
+  <nav>
+    <a href="#" onclick="mostrarSecao('inicio', this)" class="ativo">Início</a>
+    <a href="#" onclick="mostrarSecao('sobre', this)">Sobre</a>
+    <a href="#" onclick="mostrarSecao('camera', this)">Minha Câmera</a>
+    <a href="#" onclick="mostrarSecao('galeria', this)">Galeria</a>
+  </nav>
+  <main>
+    <section id="inicio" class="active">
+      <h2>Bem-vindo ao meu portfólio fotográfico</h2>
+      <p>Aqui você encontrará minha visão do mundo através da fotografia. Navegue pelas seções para conhecer meu equipamento, entender minha relação com a arte fotográfica e explorar meus álbuns temáticos.</p>
+    </section>
+    <section id="sobre">
+      <h2>Sobre a Fotografia</h2>
+      <p>A fotografia é mais do que capturar imagens — é congelar emoções, histórias e momentos que jamais se repetirão. Para mim, ela é uma forma de expressão que permite mostrar o mundo pela minha perspectiva.</p>
+      <p>Comecei fotografando cenas simples do cotidiano e aos poucos fui me aprofundando na arte e na técnica por trás de uma boa imagem. Cada clique é um passo no meu aprendizado e uma nova história a ser contada.</p>
+    </section>
+    <section id="camera">
+      <div class="camera-info">
+        <h2>Minha Câmera: Canon Rebel T6</h2>
+        <ul>
+          <li>Sensor CMOS APS-C de 18MP</li>
+          <li>Processador de imagem DIGIC 4+</li>
+          <li>ISO 100–6400 (expansível até 12800)</li>
+          <li>Gravação de vídeo Full HD</li>
+          <li>Conectividade Wi-Fi e NFC</li>
+        </ul>
+        <img src="imagens/2.jpeg">
+        <p><a href="https://www.canon.com.br/produtos/canon-eos-rebel-t6" target="_blank" style="color: #fff; text-decoration: underline;">Saiba onde comprar</a></p>
+      </div>
+    </section>
+    <section id="galeria">
+      <h2>Algumas fotos que já tirei em minha carreira:</h2>
+      <div class="galeria">
+        <img src="imagens/1.jpg" alt="Foto 1" onclick="abrirModal(this.src)">
+        <img src="imagens/4.jpg" alt="Foto 2" onclick="abrirModal(this.src)">
+        <img src="imagens/5.jpg" alt="Foto 3" onclick="abrirModal(this.src)">
+        <img src="imagens/6.jpg" alt="Foto 4" onclick="abrirModal(this.src)">
+        <img src="imagens/7.jpg" alt="Foto 5" onclick="abrirModal(this.src)">
+      </div>
+    </section>
+  </main>
+  <div class="modal" id="modal" onclick="fecharModal()">
+    <img id="imagemAmpliada" class="imagem-ampliada" src="" alt="Imagem ampliada">
+  </div>
+  <footer>
+    <div>
+      <section>
+        <h4>Contato</h4>
+        <a href="https://wa.me/5563984730600?text=Ol%C3%A1,%20venho%20por%20meio%20do%20seu%20site%20e%20quero%20entrar%20em%20contato!!!" target="_blank">Telefone: (63) 98473-0600</a>
+        <a href="mailto:stanleybelemcosta30@gmail.com" target="_blank">stanleybelemcosta30@gmail.com</a>
+      </section>
+      <section>
+        <h4>Suporte</h4>
+        <a href="#">Ajuda</a>
+        <a href="#">Termos de Uso</a>
+        <a href="#">Política de Privacidade</a>
+      </section>
+      <section>
+        <h4>Redes Sociais</h4>
+        <a href="https://www.instagram.com/st_lzin/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/stanley.belem.costa?locale=pt_BR" target="_blank">Facebook</a>
+        <a href="https://www.banlek.com/stanleybc" target="_blank">Banlek</a>
+      </section>
+    </div>
+  </footer>
+  <script>
+    function mostrarSecao(id, link) {
+      document.querySelectorAll('main > section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(el => el.classList.remove('ativo'));
+      link.classList.add('ativo');
+    }
+    function abrirModal(src) {
+      const modal = document.getElementById('modal');
+      const imagem = document.getElementById('imagemAmpliada');
+      imagem.src = src;
+      modal.style.display = 'flex';
+    }
+    function fecharModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
