@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfólio fotográfico de Stanley Belém Costa com foco em esportes, paisagens, retratos e cotidiano.">
+  <meta name="description" content="Fotógrafo profissional especializado em esportes, retratos e paisagens. Portfólio, serviços e contato.">
   <meta name="keywords" content="fotografia, portfólio, futsal, retrato, estúdio, Stanley, fotógrafo profissional">
   <meta name="author" content="Stanley Belém Costa">
-  <title>Minha Jornada na Fotografia</title>
+  <title>Minha Jornada na Fotografia | Portfólio Profissional</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>">
   <style>
     * { box-sizing: border-box; }
     html, body {
@@ -14,21 +15,36 @@
       padding: 0;
       height: auto;
       overflow-y: auto;
+      scroll-behavior: smooth;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #121212;
       color: #e0e0e0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.modo-claro {
+      background-color: #f5f5f5;
+      color: #333;
     }
     header {
       background-color: #1f1f1f;
       padding: 30px 20px;
       text-align: center;
       border-bottom: 2px solid #333;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      transition: all 0.3s;
+    }
+    .modo-claro header {
+      background-color: #e0e0e0;
+      border-bottom-color: #ccc;
     }
     header h1 {
       margin: 0;
       font-size: 36px;
+      animation: fadeIn 1s ease-in-out;
     }
     nav {
       background-color: #1f1f1f;
@@ -37,33 +53,55 @@
       padding: 5px;
       gap: 2px;
       border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .modo-claro nav {
+      background-color: #e0e0e0;
+      border-bottom-color: #ccc;
     }
     nav a {
       padding: 10px 20px;
       background-color: #2d2d2d;
       color: #e0e0e0;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
+      border-radius: 10px;
       text-decoration: none;
       font-size: 14px;
       transition: all 0.2s ease-in-out;
     }
+    .modo-claro nav a {
+      background-color: #d0d0d0;
+      color: #333;
+    }
     nav a:hover {
       background-color: #3a3a3a;
       color: rgb(255, 255, 255);
+      transform: translateY(-2px);
+    }
+    .modo-claro nav a:hover {
+      background-color: #b0b0b0;
     }
     nav a.ativo {
       background-color: #ffffffa6;
       color: #000;
       font-weight: bold;
     }
+    .modo-claro nav a.ativo {
+      background-color: #3a3a3a;
+      color: #fff;
+    }
     main > section {
       display: none;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.3s ease, height 0.3s ease;
     }
     main > section.active {
       display: block;
+      opacity: 1;
+      height: auto;
       padding: 20px;
       max-width: 1000px;
       margin: auto;
@@ -82,11 +120,12 @@
       object-fit: cover;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
-      transition: transform 0.2s;
-      border: 2px solid #aaa
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid #aaa;
     }
     .galeria img:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     }
     .modal {
       display: none;
@@ -98,14 +137,15 @@
       background-color: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
+      animation: fadeIn 0.3s;
     }
     .imagem-ampliada {
       max-width: 90%;
       max-height: 90%;
       border-radius: 12px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-      border: 3px blackdrop-filter white;
       cursor: zoom-out;
+      animation: zoomIn 0.3s;
     }
     .camera-info {
       background: url('imagens/3.jpeg') no-repeat center center;
@@ -113,17 +153,28 @@
       padding: 40px;
       color: white;
       border-radius: 10px;
-      object-fit: contain;
-      overflow: visible;
       height: 50%;
-      float: auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .camera-info::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    .camera-info > * {
+      position: relative;
+      z-index: 1;
     }
     .camera-info img {
       max-width: 160px;
       height: 160px;
-      margin-top: auto;
+      margin-top: 20px;
       border-radius: 50%;
       object-fit: contain;
+      display: block;
     }
     footer {
       background-color: #1f1f1f;
@@ -132,6 +183,11 @@
       font-size: 14px;
       color: #aaa;
       border-top: 2px solid #333;
+    }
+    .modo-claro footer {
+      background-color: #e0e0e0;
+      color: #555;
+      border-top-color: #ccc;
     }
     footer div {
       max-width: 900px;
@@ -144,16 +200,31 @@
     footer div section {
       flex: 1 1 200px;
     }
-    footer h4 { color: #fff; margin-bottom: 10px; }
+    footer h4 { 
+      color: #fff; 
+      margin-bottom: 10px; 
+    }
+    .modo-claro footer h4 {
+      color: #333;
+    }
     footer a {
       color: #aaa;
       display: block;
       margin-bottom: 6px;
       text-decoration: none;
+      transition: color 0.2s;
     }
-    footer a:hover { color: #fff; }
+    .modo-claro footer a {
+      color: #555;
+    }
+    footer a:hover { 
+      color: #fff; 
+    }
+    .modo-claro footer a:hover {
+      color: #000;
+    }
     
-    /* Estilos específicos para a seção de contato */
+    /* Estilos para a seção de contato */
     #contato {
       max-width: 600px;
       margin: 0 auto;
@@ -161,6 +232,11 @@
       background-color: #1f1f1f;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.5s;
+    }
+    .modo-claro #contato {
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     #contato h2 {
@@ -169,20 +245,29 @@
       color: #ffffff;
       font-size: 24px;
     }
+    .modo-claro #contato h2 {
+      color: #333;
+    }
     
     #formContato {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
     }
     
     #formContato label {
       font-weight: bold;
       color: #e0e0e0;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .modo-claro #formContato label {
+      color: #555;
     }
     
     #formContato input,
-    #formContato textarea {
+    #formContato textarea,
+    #formContato select {
       padding: 12px;
       border: 1px solid #444;
       border-radius: 5px;
@@ -191,13 +276,28 @@
       font-family: inherit;
       font-size: 16px;
       width: 100%;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
+    }
+    .modo-claro #formContato input,
+    .modo-claro #formContato textarea,
+    .modo-claro #formContato select {
+      background-color: #f0f0f0;
+      color: #333;
+      border-color: #ccc;
     }
     
     #formContato input:focus,
-    #formContato textarea:focus {
+    #formContato textarea:focus,
+    #formContato select:focus {
       outline: none;
       border-color: #666;
+      box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.2);
+    }
+    .modo-claro #formContato input:focus,
+    .modo-claro #formContato textarea:focus,
+    .modo-claro #formContato select:focus {
+      border-color: #999;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
     }
     
     #formContato textarea {
@@ -214,11 +314,22 @@
       cursor: pointer;
       font-weight: bold;
       font-size: 16px;
-      transition: background-color 0.3s;
+      transition: all 0.3s;
+    }
+    .modo-claro #formContato button {
+      background-color: #555;
     }
     
     #formContato button:hover {
       background-color: #4a4a4a;
+      transform: translateY(-2px);
+    }
+    .modo-claro #formContato button:hover {
+      background-color: #666;
+    }
+    
+    #formContato button:active {
+      transform: translateY(0);
     }
     
     #resultado {
@@ -227,6 +338,7 @@
       border-radius: 5px;
       text-align: center;
       display: none;
+      animation: fadeIn 0.5s;
     }
     
     .erro {
@@ -234,10 +346,18 @@
       font-size: 14px;
       margin-top: 5px;
       display: none;
+      animation: shake 0.5s;
+    }
+    .modo-claro .erro {
+      color: #d32f2f;
     }
     
     .input-invalido {
       border-color: #ff6b6b !important;
+      animation: shake 0.5s;
+    }
+    .modo-claro .input-invalido {
+      border-color: #d32f2f !important;
     }
     
     .sucesso {
@@ -245,76 +365,421 @@
       color: #81c784;
       border: 1px solid #81c784;
     }
+    .modo-claro .sucesso {
+      background-color: rgba(46, 125, 50, 0.3);
+    }
     
     .falha {
       background-color: rgba(198, 40, 40, 0.2);
       color: #ff6b6b;
       border: 1px solid #ff6b6b;
     }
+    .modo-claro .falha {
+      background-color: rgba(198, 40, 40, 0.3);
+    }
+    
+    /* Estilos para o modo claro/escuro */
+    .toggle-mode {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      padding: 10px;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: all 0.3s;
+    }
+    .toggle-mode:hover {
+      background: #555;
+      transform: scale(1.1);
+    }
+    .modo-claro .toggle-mode {
+      background: #ddd;
+      color: #333;
+    }
+    
+    /* Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes zoomIn {
+      from { 
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to { 
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Estilos para a nova seção de portfólio */
+    .filtros {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .filtros button {
+      padding: 8px 16px;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .modo-claro .filtros button {
+      background-color: #d0d0d0;
+      color: #333;
+    }
+    
+    .filtros button:hover {
+      background-color: #3a3a3a;
+    }
+    .modo-claro .filtros button:hover {
+      background-color: #b0b0b0;
+    }
+    
+    .filtros button.ativo {
+      background-color: #ffffffa6;
+      color: #000;
+      font-weight: bold;
+    }
+    .modo-claro .filtros button.ativo {
+      background-color: #3a3a3a;
+      color: #fff;
+    }
+    
+    .galeria-dinamica {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    
+    .item-portfolio {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      aspect-ratio: 1/1;
+    }
+    
+    .item-portfolio:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .item-portfolio img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    
+    .item-portfolio:hover img {
+      transform: scale(1.1);
+    }
+    
+    .info-portfolio {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      padding: 20px 15px 15px;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    
+    .item-portfolio:hover .info-portfolio {
+      transform: translateY(0);
+    }
+    
+    /* Botão de voltar ao topo */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .back-to-top:hover {
+      background: #555;
+      transform: translateY(-3px);
+    }
+    
+    .modo-claro .back-to-top {
+      background: #ddd;
+      color: #333;
+    }
+    
+    .modo-claro .back-to-top:hover {
+      background: #ccc;
+    }
+    
+    /* Seção de depoimentos */
+    .depoimentos {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .depoimento {
+      min-width: 300px;
+      background-color: #2d2d2d;
+      padding: 20px;
+      border-radius: 10px;
+      scroll-snap-align: start;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .modo-claro .depoimento {
+      background-color: #f0f0f0;
+    }
+    
+    .depoimento .cliente {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .depoimento .cliente img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .depoimento .cliente h4 {
+      margin: 0;
+      color: #fff;
+    }
+    .modo-claro .depoimento .cliente h4 {
+      color: #333;
+    }
+    
+    .depoimento .texto {
+      font-style: italic;
+      color: #ccc;
+    }
+    .modo-claro .depoimento .texto {
+      color: #666;
+    }
+    
+    /* Seção de FAQ */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 15px;
+    }
+    .modo-claro .faq-item {
+      border-bottom-color: #ddd;
+    }
+    
+    .faq-pergunta {
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s;
+    }
+    
+    .faq-pergunta:hover {
+      color: #fff;
+    }
+    .modo-claro .faq-pergunta:hover {
+      color: #000;
+    }
+    
+    .faq-resposta {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding-top 0.3s ease;
+      color: #aaa;
+    }
+    .modo-claro .faq-resposta {
+      color: #666;
+    }
+    
+    .faq-item.ativo .faq-resposta {
+      max-height: 500px;
+      padding-top: 10px;
+    }
+    
+    .faq-item.ativo .faq-pergunta::after {
+      content: '-';
+    }
+    
+    .faq-pergunta::after {
+      content: '+';
+      font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
+  <button class="toggle-mode" onclick="toggleModo()">🌓</button>
+  
   <header>
     <h1>Minha Jornada na Fotografia</h1>
   </header>
+  
   <nav>
     <a href="#" onclick="mostrarSecao('inicio', this)" class="ativo">Início</a>
     <a href="#" onclick="mostrarSecao('sobre', this)">Sobre</a>
-    <a href="#" onclick="mostrarSecao('camera', this)">Minha Câmera</a>
-    <a href="#" onclick="mostrarSecao('galeria', this)">Galeria</a>
-    <a href="#" onclick="mostrarSecao('contato', this)">Contate-nos</a>
+    <a href="#" onclick="mostrarSecao('portfolio', this)">Portfólio</a>
+    <a href="#" onclick="mostrarSecao('camera', this)">Equipamento</a>
+    <a href="#" onclick="mostrarSecao('servicos', this)">Serviços</a>
+    <a href="#" onclick="mostrarSecao('contato', this)">Contato</a>
   </nav>
+  
   <main>
     <section id="inicio" class="active">
       <h1 class="emoji">🎞️ Bem-vindo ao meu portfólio fotográfico 📸</h1>
-  <p><strong>Onde a técnica encontra a sensibilidade, e cada clique conta uma história.</strong></p>
+      <p><strong>Onde a técnica encontra a sensibilidade, e cada clique conta uma história.</strong></p>
 
-  <p>Neste espaço, você vai conhecer a essência do meu trabalho como fotógrafo: um olhar treinado, um compromisso com a excelência técnica e uma paixão verdadeira por registrar o mundo ao meu redor. Aqui, cada imagem foi criada com propósito — não apenas para ser vista, mas para ser sentida.</p>
+      <p>Neste espaço, você vai conhecer a essência do meu trabalho como fotógrafo: um olhar treinado, um compromisso com a excelência técnica e uma paixão verdadeira por registrar o mundo ao meu redor. Aqui, cada imagem foi criada com propósito — não apenas para ser vista, mas para ser sentida.</p>
 
-  <h2 class="emoji">🔧 Equipamento e técnica</h2>
-  <p>Utilizo um conjunto profissional de câmeras, lentes e acessórios cuidadosamente escolhidos para cada tipo de cenário, seja em estúdio, ambientes urbanos, quadras esportivas ou paisagens naturais. A precisão no uso da luz, o domínio da composição e o tratamento de imagem pós-captura são elementos fundamentais do meu fluxo de trabalho — garantindo qualidade, nitidez e impacto visual em cada fotografia.</p>
+      <div class="destaque" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffffffa6;">
+        <h3 style="margin-top: 0;">✨ Destaque do Mês</h3>
+        <p>Confira minha série especial "Movimento e Emoção" no portfólio, capturando a essência do futsal em ação.</p>
+      </div>
 
-  <h2 class="emoji">🏃‍♂️ Fotografia Esportiva (com foco em Futsal)</h2>
-  <p>Com uma abordagem dinâmica e técnica, registro a intensidade do esporte com foco especial em futsal. A velocidade das jogadas, a emoção dos atletas e a atmosfera das partidas são captadas com enquadramentos precisos e domínio do tempo de exposição — congelando momentos que, muitas vezes, duram menos que um piscar de olhos.</p>
+      <h2 class="emoji">🔧 Equipamento e técnica</h2>
+      <p>Utilizo um conjunto profissional de câmeras, lentes e acessórios cuidadosamente escolhidos para cada tipo de cenário, seja em estúdio, ambientes urbanos, quadras esportivas ou paisagens naturais. A precisão no uso da luz, o domínio da composição e o tratamento de imagem pós-captura são elementos fundamentais do meu fluxo de trabalho — garantindo qualidade, nitidez e impacto visual em cada fotografia.</p>
 
-  <h2 class="emoji">🌇 Fotografia do Cotidiano e Paisagens</h2>
-  <p>Gosto de transformar o ordinário em extraordinário. Ao caminhar pelas ruas, observar a luz natural e explorar os contrastes da cidade e da natureza, produzo imagens que revelam a beleza que muitas vezes passa despercebida. Cada paisagem e cada rosto tem uma história — meu papel é revelá-la com autenticidade.</p>
+      <h2 class="emoji">🏃‍♂️ Fotografia Esportiva</h2>
+      <p>Com uma abordagem dinâmica e técnica, registro a intensidade do esporte com foco especial em futsal. A velocidade das jogadas, a emoção dos atletas e a atmosfera das partidas são captadas com enquadramentos precisos e domínio do tempo de exposição — congelando momentos que, muitas vezes, duram menos que um piscar de olhos.</p>
 
-  <h2 class="emoji">👥 Retratos & Ensaios em Estúdio</h2>
-  <p>Em meu estúdio fotográfico, ofereço um ambiente controlado para produções mais refinadas. Aqui, luzes, fundos e equipamentos são utilizados de forma precisa para criar retratos profissionais, ensaios criativos e projetos autorais. O estúdio é um laboratório de ideias, onde cada sessão é planejada com foco nos detalhes, na direção de poses e na construção de identidade visual.</p>
+      <div class="galeria" style="margin: 30px 0;">
+        <img src="imagens/1.jpg" alt="Fotografia esportiva - Jogador de futsal em ação" onclick="abrirModal(this.src)">
+        <img src="imagens/7.jpg" alt="Retrato em estúdio - Expressão intensa" onclick="abrirModal(this.src)">
+        <img src="imagens/5.jpg" alt="Paisagem urbana - Cidade ao entardecer" onclick="abrirModal(this.src)">
+      </div>
 
-  <h2 class="emoji">🗂️ Explore meus álbuns temáticos</h2>
-  <ul>
-    <li>🔹 Esportes</li>
-    <li>🔹 Paisagens Urbanas & Naturais</li>
-    <li>🔹 Retratos em Estúdio</li>
-    <li>🔹 Ensaios Pessoais</li>
-    <li>🔹 Cotidiano & Fotografia Espontânea</li>
-  </ul>
+      <h2 class="emoji">🌇 Fotografia do Cotidiano e Paisagens</h2>
+      <p>Gosto de transformar o ordinário em extraordinário. Ao caminhar pelas ruas, observar a luz natural e explorar os contrastes da cidade e da natureza, produzo imagens que revelam a beleza que muitas vezes passa despercebida. Cada paisagem e cada rosto tem uma história — meu papel é revelá-la com autenticidade.</p>
 
-  <p>✨ Cada seção reflete um pouco da minha visão sobre o mundo — uma mistura de técnica, criatividade e sensibilidade. Este portfólio é um convite para enxergar além do óbvio, descobrir novos ângulos e se conectar com imagens que falam por si.</p>
+      <h2 class="emoji">👥 Retratos & Ensaios em Estúdio</h2>
+      <p>Em meu estúdio fotográfico, ofereço um ambiente controlado para produções mais refinadas. Aqui, luzes, fundos e equipamentos são utilizados de forma precisa para criar retratos profissionais, ensaios criativos e projetos autorais. O estúdio é um laboratório de ideias, onde cada sessão é planejada com foco nos detalhes, na direção de poses e na construção de identidade visual.</p>
 
-  <h2 class="emoji">🚀 Pronto para essa jornada visual?</h2>
-  <p>Navegue pelas seções, conheça meu processo, veja os bastidores e, se quiser, entre em contato para projetos, parcerias ou ensaios personalizados.</p>
+      <h2 class="emoji">🗂️ Explore meus álbuns temáticos</h2>
+      <ul>
+        <li>🔹 <strong>Esportes</strong>: Ação, emoção e momentos decisivos</li>
+        <li>🔹 <strong>Paisagens Urbanas & Naturais</strong>: Beleza nos detalhes do mundo</li>
+        <li>🔹 <strong>Retratos em Estúdio</strong>: Expressão e personalidade</li>
+        <li>🔹 <strong>Ensaios Pessoais</strong>: Projetos autorais e conceituais</li>
+        <li>🔹 <strong>Cotidiano & Fotografia Espontânea</strong>: Histórias do dia a dia</li>
+      </ul>
 
-  <p><strong>A fotografia é minha linguagem. E este portfólio é meu modo de dialogar com você.</strong></p>
+      <p style="text-align: center; margin-top: 30px;">
+        <a href="#" onclick="mostrarSecao('portfolio', event.target)" style="background-color: #3a3a3a; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold; transition: all 0.3s;">Explorar Portfólio Completo</a>
+      </p>
     </section>
+    
     <section id="sobre">
-      <h2>Sobre a Fotografia</h2>
+      <h2>Sobre Mim e Minha Jornada</h2>
+      
+      <div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; align-items: center;">
+        <img src="imagens/2.jpeg" alt="Stanley Belém Costa - Fotógrafo" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #ffffffa6;">
+        <div style="flex: 1; min-width: 250px;">
+          <h3 style="margin-top: 0;">Stanley Belém Costa</h3>
+          <p>Fotógrafo desde 2024, especializado em esportes, retratos e paisagens. Apaixonado por contar histórias através das lentes.</p>
+        </div>
+      </div>
+      
+      <h3>Minha História</h3>
       <p>A fotografia é mais do que capturar imagens — é <strong>congelar emoções, contar histórias e eternizar momentos únicos</strong> que jamais se repetirão. Para mim, ela é uma linguagem visual poderosa, uma forma de expressão que permite revelar como vejo o mundo, os detalhes que me tocam e a beleza que encontro nos lugares mais simples.</p>
 
-  <p>Comecei fotografando cenas cotidianas: uma rua iluminada pelo sol da tarde, um olhar distraído, o reflexo da cidade após a chuva... Aos poucos, fui entendendo que, por trás de uma boa imagem, existe <strong>técnica, paciência e sensibilidade</strong>. 📸✨</p>
+      <p>Comecei fotografando cenas cotidianas: uma rua iluminada pelo sol da tarde, um olhar distraído, o reflexo da cidade após a chuva... Aos poucos, fui entendendo que, por trás de uma boa imagem, existe <strong>técnica, paciência e sensibilidade</strong>. 📸✨</p>
 
-  <p>Com o tempo, aprendi a explorar elementos como <em>luz natural e artificial</em>, <em>composição</em>, <em>contrastes</em> e <em>profundidade de campo</em>, transformando simples registros em narrativas visuais. Cada clique é um passo no meu desenvolvimento como artista visual — um processo constante de estudo, prática e inspiração.</p>
+      <h3>Minha Abordagem</h3>
+      <p>Com o tempo, aprendi a explorar elementos como <em>luz natural e artificial</em>, <em>composição</em>, <em>contrastes</em> e <em>profundidade de campo</em>, transformando simples registros em narrativas visuais. Cada clique é um passo no meu desenvolvimento como artista visual — um processo constante de estudo, prática e inspiração.</p>
 
-  <p>Seja em meio à adrenalina de uma partida de futsal, na calma de um retrato em estúdio ou no silêncio de uma paisagem ao entardecer, a fotografia me permite viver com mais presença e registrar com mais consciência. 🏞️🏃‍♂️👥</p>
+      <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0;">
+        
+        <p>"Busco não apenas registrar momentos, mas criar imagens que evocam emoções e contam histórias. Cada projeto é uma oportunidade de ver o mundo de uma nova perspectiva."</p>
+      </div>
 
-  <p><strong>Cada foto é um convite para observar com mais atenção e sentir com mais intensidade.</strong><br>
-  É nisso que acredito. E é isso que compartilho com você neste portfólio.</p>
+      <p>Seja em meio à adrenalina de uma partida de futsal, na calma de um retrato em estúdio ou no silêncio de uma paisagem ao entardecer, a fotografia me permite viver com mais presença e registrar com mais consciência. 🏞️🏃‍♂️👥</p>
+
+      <p><strong>Cada foto é um convite para observar com mais atenção e sentir com mais intensidade.</strong><br>
+      É nisso que acredito. E é isso que compartilho com você neste portfólio.</p>
     </section>
+    
+    <section id="portfolio">
+      <h2>Meu Portfólio:</h2>
+      <p>Cada imagem conta uma história única.</p>
+      
+      <div class="filtros">
+        <button class="ativo" data-categoria="todos">Todos</button>
+        <button data-categoria="esportes">Esportes</button>
+        <button data-categoria="retratos">Retratos</button>
+        <button data-categoria="paisagens">Paisagens</button>
+        <button data-categoria="eventos">Eventos</button>
+      </div>
+      
+      <div class="galeria-dinamica" id="galeriaPortfolio">
+
+      </div>
+    </section>
+    
     <section id="camera">
       <div class="camera-info">
-        <h2>Minha Câmera: Canon Rebel T6</h2>
+        <h2>Meu Equipamento:</h2>
+        <p>Conheça as ferramentas que uso para transformar visões em imagens.</p>
+        
+        <h3>Canon Rebel T6</h3>
         <ul>
           <li>Sensor CMOS APS-C de 18MP</li>
           <li>Processador de imagem DIGIC 4+</li>
@@ -322,52 +787,193 @@
           <li>Gravação de vídeo Full HD</li>
           <li>Conectividade Wi-Fi e NFC</li>
         </ul>
-        <img src="imagens/2.jpeg">
-        <p><a href="https://www.canon.com.br/produtos/canon-eos-rebel-t6" target="_blank" style="color: #fff; text-decoration: underline;">Saiba onde comprar</a></p>
+        
+        <h3 style="margin-top: 30px;">Lentes Principais</h3>
+        <ul>
+          <li>EF-S 18-55mm f/3.5-5.6 IS II (kit)</li>
+          <li>EF 50mm f/1.8 STM (retratos)</li>
+          <li>EF-S 55-250mm f/4-5.6 IS II (esportes)</li>
+        </ul>
+        
+        <h3 style="margin-top: 30px;">Acessórios</h3>
+        <ul>
+          <li>Tripé Manfrotto MT190XPRO3</li>
+        </ul>
+        
+        <img src="imagens/2.jpeg" alt="Canon Rebel T6">
+        <p><a href="https://www.canon.com.br/produtos/canon-eos-rebel-t6" target="_blank" style="color: #fff; text-decoration: underline;">Saiba mais sobre este equipamento</a></p>
       </div>
     </section>
-    <section id="galeria">
-      <h2>Algumas fotos que já tirei em minha carreira:</h2>
-      <div class="galeria">
-        <img src="imagens/1.jpg" alt="Foto 1" onclick="abrirModal(this.src)">
-        <img src="imagens/4.jpg" alt="Foto 2" onclick="abrirModal(this.src)">
-        <img src="imagens/5.jpg" alt="Foto 3" onclick="abrirModal(this.src)">
-        <img src="imagens/6.jpg" alt="Foto 4" onclick="abrirModal(this.src)">
-        <img src="imagens/7.jpg" alt="Foto 5" onclick="abrirModal(this.src)">
+    
+    <section id="servicos">
+      <h2>Serviços Oferecidos</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+          <h3 style="margin-top: 0;">📸 Fotografia Esportiva</h3>
+          <p>Captura de momentos decisivos em partidas e competições, com foco especial em futsal.</p>
+          <ul>
+            <li>Cobertura de eventos esportivos</li>
+            <li>Sessões de ação</li>
+            <li>Fotos de equipes</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+          <h3 style="margin-top: 0;">👤 Retratos em Estúdio</h3>
+          <p>Sessões profissionais com iluminação controlada para resultados impressionantes.</p>
+          <ul>
+            <li>Retratos individuais</li>
+            <li>Ensaios profissionais</li>
+            <li>Fotos para redes sociais</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+          <h3 style="margin-top: 0;">🌆 Paisagens Urbanas</h3>
+          <p>Exploração visual de cidades, arquitetura e ambientes urbanos.</p>
+          <ul>
+            <li>Fotografia de rua</li>
+            <li>Paisagens noturnas</li>
+            <li>Projetos autorais</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+          <h3 style="margin-top: 0;">🎉 Eventos Sociais</h3>
+          <p>Cobertura completa de casamentos, formaturas e eventos corporativos.</p>
+          <ul>
+            <li>Eventos familiares</li>
+            <li>Confraternizações</li>
+            <li>Festas temáticas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h3 style="margin-top: 40px;">Depoimentos de Clientes</h3>
+      <div class="depoimentos">
+        <div class="depoimento">
+          <div class="cliente">
+            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Maria Silva">
+            <h4>Maria Silva</h4>
+          </div>
+          <div class="texto">
+            "As fotos do meu casamento ficaram incríveis! Stanley capturou cada momento especial com sensibilidade e técnica."
+          </div>
+        </div>
+        
+        <div class="depoimento">
+          <div class="cliente">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Oliveira">
+            <h4>Carlos Oliveira</h4>
+          </div>
+          <div class="texto">
+            "Contratei para cobrir o campeonato de futsal da empresa e superou todas as expectativas. As fotos em ação são espetaculares!"
+          </div>
+        </div>
+        
+        <div class="depoimento">
+          <div class="cliente">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ana Costa">
+            <h4>Ana Costa</h4>
+          </div>
+          <div class="texto">
+            "Fiz um ensaio profissional e amei o resultado. Stanley tem um olhar único e sabe direcionar muito bem durante as sessões."
+          </div>
+        </div>
+      </div>
+      
+      <h3 style="margin-top: 40px;">Perguntas Frequentes</h3>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-pergunta">Como agendar uma sessão fotográfica?</div>
+          <div class="faq-resposta">
+            Você pode entrar em contato através do formulário no site, WhatsApp ou e-mail. Após definirmos a data, envio um contrato e as orientações para o dia da sessão.
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-pergunta">Quanto tempo demora para receber as fotos?</div>
+          <div class="faq-resposta">
+            O prazo médio é de 7 a 14 dias úteis após a sessão, dependendo da complexidade do trabalho e da quantidade de imagens.
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-pergunta">Você fornece as fotos editadas e em alta resolução?</div>
+          <div class="faq-resposta">
+            Sim, todas as fotos entregues são editadas profissionalmente e fornecidas em alta resolução, além de versões otimizadas para redes sociais quando aplicável.
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-pergunta">Trabalha fora da sua cidade?</div>
+          <div class="faq-resposta">
+            Sim, realizo trabalhos em outras cidades e estados. Nesses casos, é acrescido o custo de deslocamento e hospedagem quando necessário.
+          </div>
+        </div>
       </div>
     </section>
+    
     <section id="contato">
-      <h2>Mande-nos uma mensagem:</h2>
+      <h2>Entre em Contato</h2>
+      <p>Preencha o formulário abaixo para solicitar orçamentos, agendar sessões ou tirar dúvidas. Respondo em até 48 horas.</p>
+      
       <form id="formContato">
         <div>
-          <label for="nome">Nome:</label>
-          <input type="text" id="nome" name="nome" required>
+          <label for="nome">Nome completo:</label>
+          <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
           <div id="erro-nome" class="erro">Por favor, insira seu nome</div>
         </div>
         
         <div>
           <label for="email">E-mail:</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" required placeholder="seu@email.com">
           <div id="erro-email" class="erro">Por favor, insira um e-mail válido</div>
         </div>
         
         <div>
-            <label for="telefone">Telefone:</label>
-            <input type="telefone" id="telefone" name="telefone" required>
-            <div id="erro-telefone" class="erro">Por favor, insira um telefone válido</div>
-          </div>
-
+          <label for="telefone">Telefone (opcional):</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(63) 98765-4321">
+          <div id="erro-telefone" class="erro">Formato inválido (use: (99) 99999-9999)</div>
+        </div>
+        
+        <div>
+          <label for="assunto">Assunto:</label>
+          <select id="assunto" name="assunto" required>
+            <option value="">Selecione...</option>
+            <option value="orcamento">Solicitar orçamento</option>
+            <option value="agendamento">Agendar sessão</option>
+            <option value="duvida">Tirar dúvidas</option>
+            <option value="outro">Outro</option>
+          </select>
+          <div id="erro-assunto" class="erro">Por favor, selecione um assunto</div>
+        </div>
+        
         <div>
           <label for="mensagem">Mensagem:</label>
-          <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+          <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Descreva sua necessidade..."></textarea>
           <div id="erro-mensagem" class="erro">Por favor, insira sua mensagem</div>
         </div>
         
         <button type="submit">Enviar Mensagem</button>
       </form>
+      
       <div id="resultado"></div>
+      
+      <div style="margin-top: 40px; background-color: #2d2d2d; padding: 20px; border-radius: 10px;">
+        <h3 style="margin-top: 0;">Outras Formas de Contato</h3>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5563984730600" style="color: #ffffffa6;">(63) 98473-0600</a></p>
+        <p><strong>E-mail:</strong> <a href="mailto:stanleybelemcosta30@gmail.com" style="color: #ffffffa6;">stanleybelemcosta30@gmail.com</a></p>
+        <p><strong>Redes Sociais:</strong> 
+          <a href="https://www.instagram.com/st_lzin/" target="_blank" style="color: #ffffffa6; margin-right: 10px;">Instagram</a>
+          <a href="https://www.facebook.com/stanley.belem.costa?locale=pt_BR" target="_blank" style="color: #ffffffa6; margin-right: 10px;">Facebook</a>
+          <a href="https://www.banlek.com/stanleybc" target="_blank" style="color: #ffffffa6;">Banlek</a>
+        </p>
+      </div>
     </section>
   </main>
+  
   <div class="modal" id="modal" onclick="fecharModal()">
     <img id="imagemAmpliada" class="imagem-ampliada" src="" alt="Imagem ampliada">
   </div>
@@ -381,8 +987,8 @@
       </section>
       <section>
         <h4>Suporte</h4>
-        <a href="#">Ajuda</a>
-        <a href="#">Termos de Uso</a>
+        <a href="#" onclick="mostrarSecao('servicos', event.target)">Serviços</a>
+        <a href="#" onclick="mostrarSecao('faq', event.target)">FAQ</a>
         <a href="#">Política de Privacidade</a>
       </section>
       <section>
@@ -391,23 +997,70 @@
         <a href="https://www.facebook.com/stanley.belem.costa?locale=pt_BR" target="_blank">Facebook</a>
         <a href="https://www.banlek.com/stanleybc" target="_blank">Banlek</a>
       </section>
+      <section>
+        <h4>Newsletter</h4>
+        <p>Assine para receber novidades e promoções:</p>
+        <form style="display: flex; gap: 5px;">
+          <input type="email" placeholder="Seu e-mail" style="flex: 1; padding: 8px; border-radius: 4px; border: none;">
+          <button type="submit" style="padding: 8px 12px; background: #3a3a3a; color: white; border: none; border-radius: 4px;">OK</button>
+        </form>
+      </section>
+    </div>
+    <div style="margin-top: 30px; text-align: center; width: 100%;">
+      <p>&copy; 2025 Stanley Belém Costa. Todos os direitos reservados.</p>
     </div>
   </footer>
+  
+  <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <span>⬆️</span> Topo
+  </button>
+
   <script>
+    // Função para mostrar seções
     function mostrarSecao(id, link) {
-      document.querySelectorAll('main > section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('main > section').forEach(sec => {
+        sec.classList.remove('active');
+      });
       document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav a').forEach(el => el.classList.remove('ativo'));
-      link.classList.add('ativo');
+      
+      document.querySelectorAll('nav a').forEach(el => {
+        el.classList.remove('ativo');
+      });
+      
+      if (link) {
+        link.classList.add('ativo');
+      }
+      
+      // Scroll suave para o topo da seção
+      window.scrollTo({
+        top: document.getElementById(id).offsetTop - 20,
+        behavior: 'smooth'
+      });
     }
+    
+    // Modal de imagens
     function abrirModal(src) {
       const modal = document.getElementById('modal');
       const imagem = document.getElementById('imagemAmpliada');
       imagem.src = src;
       modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
+    
     function fecharModal() {
       document.getElementById('modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Toggle modo claro/escuro
+    function toggleModo() {
+      document.body.classList.toggle('modo-claro');
+      localStorage.setItem('modo-claro', document.body.classList.contains('modo-claro'));
+    }
+    
+    // Verificar preferência salva
+    if (localStorage.getItem('modo-claro') === 'true') {
+      document.body.classList.add('modo-claro');
     }
     
     // Validação do formulário de contato
@@ -418,7 +1071,7 @@
       document.querySelectorAll('.erro').forEach(el => {
         el.style.display = 'none';
       });
-      document.querySelectorAll('#formContato input, #formContato textarea').forEach(el => {
+      document.querySelectorAll('#formContato input, #formContato textarea, #formContato select').forEach(el => {
         el.classList.remove('input-invalido');
       });
       
@@ -426,6 +1079,8 @@
       let valido = true;
       const nome = document.getElementById('nome').value.trim();
       const email = document.getElementById('email').value.trim();
+      const telefone = document.getElementById('telefone').value.trim();
+      const assunto = document.getElementById('assunto').value;
       const mensagem = document.getElementById('mensagem').value.trim();
       
       // Validar nome
@@ -443,6 +1098,20 @@
         valido = false;
       }
       
+      // Validar telefone (se preenchido)
+      if (telefone && !/^\(\d{2}\) \d{5}-\d{4}$/.test(telefone)) {
+        document.getElementById('erro-telefone').style.display = 'block';
+        document.getElementById('telefone').classList.add('input-invalido');
+        valido = false;
+      }
+      
+      // Validar assunto
+      if (assunto === '') {
+        document.getElementById('erro-assunto').style.display = 'block';
+        document.getElementById('assunto').classList.add('input-invalido');
+        valido = false;
+      }
+      
       // Validar mensagem
       if (mensagem === '') {
         document.getElementById('erro-mensagem').style.display = 'block';
@@ -456,6 +1125,12 @@
         resultado.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
         resultado.className = 'sucesso';
         resultado.style.display = 'block';
+        
+        // Adicionar animação de confirmação
+        document.getElementById('formContato').classList.add('enviado');
+        setTimeout(() => {
+          document.getElementById('formContato').classList.remove('enviado');
+        }, 1500);
         
         // Limpar formulário
         document.getElementById('formContato').reset();
@@ -472,7 +1147,7 @@
       }
     });
     
-    // Adicionar validação em tempo real para o email
+    // Validação em tempo real para o email
     document.getElementById('email').addEventListener('blur', function() {
       const email = this.value.trim();
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -485,9 +1160,111 @@
         this.classList.remove('input-invalido');
       }
     });
+    
+    // Formatação automática do telefone
+    document.getElementById('telefone').addEventListener('input', function(e) {
+      let value = this.value.replace(/\D/g, '');
+      
+      if (value.length > 0) {
+        value = '(' + value.substring(0, 2) + ') ' + value.substring(2, 7) + '-' + value.substring(7, 11);
+      }
+      
+      this.value = value.substring(0, 15);
+    });
+    
+    // Carregar portfólio dinâmico
+    document.addEventListener('DOMContentLoaded', function() {
+      const portfolioItems = [
+        {
+          img: 'imagens/1.jpg',
+          categoria: 'esportes',
+          titulo: 'Ação no Futsal',
+          descricao: 'Momento decisivo em partida profissional'
+        },
+        {
+          img: 'imagens/4.jpg',
+          categoria: 'retratos',
+          titulo: 'Retrato em Estúdio',
+          descricao: 'Sessão profissional com iluminação controlada'
+        },
+        {
+          img: 'imagens/5.jpg',
+          categoria: 'paisagens',
+          titulo: 'Pôr do Sol Urbano',
+          descricao: 'Cores do entardecer na cidade'
+        },
+        {
+          img: 'imagens/6.jpg',
+          categoria: 'eventos',
+          titulo: 'Casamento',
+          descricao: 'Momento emocionante da cerimônia'
+        },
+        {
+          img: 'imagens/7.jpg',
+          categoria: 'esportes',
+          titulo: 'Salto em Ação',
+          descricao: 'Atleta em movimento durante competição'
+        },
+        {
+          img: 'imagens/1.jpg',
+          categoria: 'retratos',
+          titulo: 'Expressão Intensa',
+          descricao: 'Retrato conceitual em preto e branco'
+        }
+      ];
+      
+      const galeria = document.getElementById('galeriaPortfolio');
+      const botoesFiltro = document.querySelectorAll('.filtros button');
+      
+      // Carregar todos os itens inicialmente
+      carregarItens('todos');
+      
+      // Adicionar eventos aos botões de filtro
+      botoesFiltro.forEach(botao => {
+        botao.addEventListener('click', function() {
+          botoesFiltro.forEach(btn => btn.classList.remove('ativo'));
+          this.classList.add('ativo');
+          carregarItens(this.dataset.categoria);
+        });
+      });
+      
+      // Função para carregar itens por categoria
+      function carregarItens(categoria) {
+        galeria.innerHTML = '';
+        
+        const itensFiltrados = categoria === 'todos' 
+          ? portfolioItems 
+          : portfolioItems.filter(item => item.categoria === categoria);
+        
+        itensFiltrados.forEach(item => {
+          const itemElement = document.createElement('div');
+          itemElement.className = 'item-portfolio';
+          itemElement.innerHTML = `
+            <img src="${item.img}" alt="${item.titulo}" onclick="abrirModal(this.src)">
+            <div class="info-portfolio">
+              <h4>${item.titulo}</h4>
+              <p>${item.descricao}</p>
+            </div>
+          `;
+          galeria.appendChild(itemElement);
+        });
+      }
+    });
+    
+    // FAQ - Mostrar/esconder respostas
+    document.querySelectorAll('.faq-pergunta').forEach(pergunta => {
+      pergunta.addEventListener('click', function() {
+        const item = this.parentElement;
+        item.classList.toggle('ativo');
+        
+        // Fechar outros itens abertos
+        document.querySelectorAll('.faq-item').forEach(outroItem => {
+          if (outroItem !== item && outroItem.classList.contains('ativo')) {
+            outroItem.classList.remove('ativo');
+          }
+        });
+      });
+    });
   </script>
-  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-  style="position: fixed; bottom: 20px; right: 20px; padding: 10px 15px; background: #444; color: #fff; border: none; border-radius: 10px; cursor: pointer;">⬆️ Topo</button>
-
 </body>
 </html>
