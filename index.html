@@ -152,6 +152,105 @@
       text-decoration: none;
     }
     footer a:hover { color: #fff; }
+    
+    /* Estilos específicos para a seção de contato */
+    #contato {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    #contato h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    
+    #formContato {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    #formContato label {
+      font-weight: bold;
+      color: #e0e0e0;
+    }
+    
+    #formContato input,
+    #formContato textarea {
+      padding: 12px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+      font-family: inherit;
+      font-size: 16px;
+      width: 100%;
+      transition: border-color 0.3s;
+    }
+    
+    #formContato input:focus,
+    #formContato textarea:focus {
+      outline: none;
+      border-color: #666;
+    }
+    
+    #formContato textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    #formContato button {
+      padding: 12px 20px;
+      background-color: #3a3a3a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    
+    #formContato button:hover {
+      background-color: #4a4a4a;
+    }
+    
+    #resultado {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      display: none;
+    }
+    
+    .erro {
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .input-invalido {
+      border-color: #ff6b6b !important;
+    }
+    
+    .sucesso {
+      background-color: rgba(46, 125, 50, 0.2);
+      color: #81c784;
+      border: 1px solid #81c784;
+    }
+    
+    .falha {
+      background-color: rgba(198, 40, 40, 0.2);
+      color: #ff6b6b;
+      border: 1px solid #ff6b6b;
+    }
   </style>
 </head>
 <body>
@@ -237,28 +336,41 @@
         <img src="imagens/7.jpg" alt="Foto 5" onclick="abrirModal(this.src)">
       </div>
     </section>
+    <section id="contato">
+      <h2>Mande-nos uma mensagem:</h2>
+      <form id="formContato">
+        <div>
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required>
+          <div id="erro-nome" class="erro">Por favor, insira seu nome</div>
+        </div>
+        
+        <div>
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required>
+          <div id="erro-email" class="erro">Por favor, insira um e-mail válido</div>
+        </div>
+        
+        <div>
+            <label for="telefone">Telefone:</label>
+            <input type="telefone" id="telefone" name="telefone" required>
+            <div id="erro-telefone" class="erro">Por favor, insira um telefone válido</div>
+          </div>
+
+        <div>
+          <label for="mensagem">Mensagem:</label>
+          <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+          <div id="erro-mensagem" class="erro">Por favor, insira sua mensagem</div>
+        </div>
+        
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+      <div id="resultado"></div>
+    </section>
   </main>
   <div class="modal" id="modal" onclick="fecharModal()">
     <img id="imagemAmpliada" class="imagem-ampliada" src="" alt="Imagem ampliada">
   </div>
-
-  <div>
-    <section id="contato" class="aba">
-  <h2>Mande-nos uma mensagem:</h2>
-  <form id="formContato">
-    <label for="nome">Nome:</label><br>
-    <input type="text" id="nome" name="nome" required><br><br>
-    
-    <label for="email">E-mail:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
-    
-    <label for="mensagem">Mensagem:</label><br>
-    <textarea id="mensagem" name="mensagem" rows="5" required></textarea><br><br>
-    
-    <button type="submit">Enviar</button>
-  </form>
-  <div id="resultado"></div>
-</div>
 
   <footer>
     <div>
@@ -297,6 +409,82 @@
     function fecharModal() {
       document.getElementById('modal').style.display = 'none';
     }
+    
+    // Validação do formulário de contato
+    document.getElementById('formContato').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Resetar erros e estilos
+      document.querySelectorAll('.erro').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('#formContato input, #formContato textarea').forEach(el => {
+        el.classList.remove('input-invalido');
+      });
+      
+      // Validar campos
+      let valido = true;
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const mensagem = document.getElementById('mensagem').value.trim();
+      
+      // Validar nome
+      if (nome === '') {
+        document.getElementById('erro-nome').style.display = 'block';
+        document.getElementById('nome').classList.add('input-invalido');
+        valido = false;
+      }
+      
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById('erro-email').style.display = 'block';
+        document.getElementById('email').classList.add('input-invalido');
+        valido = false;
+      }
+      
+      // Validar mensagem
+      if (mensagem === '') {
+        document.getElementById('erro-mensagem').style.display = 'block';
+        document.getElementById('mensagem').classList.add('input-invalido');
+        valido = false;
+      }
+      
+      // Se tudo estiver válido, simular envio
+      if (valido) {
+        const resultado = document.getElementById('resultado');
+        resultado.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
+        resultado.className = 'sucesso';
+        resultado.style.display = 'block';
+        
+        // Limpar formulário
+        document.getElementById('formContato').reset();
+        
+        // Esconder mensagem após 5 segundos
+        setTimeout(() => {
+          resultado.style.display = 'none';
+        }, 5000);
+      } else {
+        const resultado = document.getElementById('resultado');
+        resultado.textContent = 'Por favor, corrija os erros no formulário.';
+        resultado.className = 'falha';
+        resultado.style.display = 'block';
+      }
+    });
+    
+    // Adicionar validação em tempo real para o email
+    document.getElementById('email').addEventListener('blur', function() {
+      const email = this.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (email && !emailRegex.test(email)) {
+        document.getElementById('erro-email').style.display = 'block';
+        this.classList.add('input-invalido');
+      } else {
+        document.getElementById('erro-email').style.display = 'none';
+        this.classList.remove('input-invalido');
+      }
+    });
   </script>
   <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
   style="position: fixed; bottom: 20px; right: 20px; padding: 10px 15px; background: #444; color: #fff; border: none; border-radius: 10px; cursor: pointer;">⬆️ Topo</button>
