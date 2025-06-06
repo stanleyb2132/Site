@@ -666,6 +666,35 @@
       content: '+';
       font-size: 1.2em;
     }
+
+    @media (max-width: 600px) {
+  header h1 {
+    font-size: 24px;
+  }
+
+  nav a {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .galeria {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .galeria img {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+
+  main > section.active {
+    padding: 15px;
+  }
+
+  .depoimento {
+    min-width: 90%;
+  }
+}
   </style>
 </head>
 <body>
