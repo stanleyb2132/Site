@@ -64,7 +64,7 @@
     nav a {
       padding: 10px 20px;
       background-color: #2d2d2d;
-      color: #e0e0e0;
+      color: #ffffff !important;
       border-radius: 10px;
       text-decoration: none;
       font-size: 14px;
@@ -72,24 +72,25 @@
     }
     .modo-claro nav a {
       background-color: #d0d0d0;
-      color: #333;
+      color: #000000 !important;
     }
     nav a:hover {
       background-color: #3a3a3a;
-      color: rgb(255, 255, 255);
+      color: rgb(255, 255, 255) !important;
       transform: translateY(-2px);
     }
     .modo-claro nav a:hover {
       background-color: #b0b0b0;
+      color:#000000 !important;
     }
     nav a.ativo {
       background-color: #ffffffa6;
-      color: #000;
+      color: #000 !important;
       font-weight: bold;
     }
     .modo-claro nav a.ativo {
       background-color: #3a3a3a;
-      color: #fff;
+      color: #ffffff !important;
     }
     main > section {
       display: none;
@@ -665,6 +666,15 @@
       content: '+';
       font-size: 1.2em;
     }
+    
+    .destaque, .bloco-servico, .bloco-contato {
+        color: white;
+    }
+    .modo-claro .destaque,
+    .modo-claro .bloco-servico,
+    .modo-claro .bloco-contato {
+        color: white;
+    }
   </style>
 </head>
 <body>
@@ -690,7 +700,7 @@
 
       <p>Neste espaço, você vai conhecer a essência do meu trabalho como fotógrafo: um olhar treinado, um compromisso com a excelência técnica e uma paixão verdadeira por registrar o mundo ao meu redor. Aqui, cada imagem foi criada com propósito — não apenas para ser vista, mas para ser sentida.</p>
 
-      <div class="destaque" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffffffa6;">
+      <div class="destaque bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffffffa6;">
         <h3 style="margin-top: 0;">✨ Destaque do Mês</h3>
         <p>Confira minha série especial "Movimento e Emoção" no portfólio, capturando a essência do futsal em ação.</p>
       </div>
@@ -746,7 +756,7 @@
       <h3>Minha Abordagem</h3>
       <p>Com o tempo, aprendi a explorar elementos como <em>luz natural e artificial</em>, <em>composição</em>, <em>contrastes</em> e <em>profundidade de campo</em>, transformando simples registros em narrativas visuais. Cada clique é um passo no meu desenvolvimento como artista visual — um processo constante de estudo, prática e inspiração.</p>
 
-      <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffffffa6;">
+      <div class="destaque bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #ffffffa6;">
         
         <p>"Busco não apenas registrar momentos, mas criar imagens que evocam emoções e contam histórias. Cada projeto é uma oportunidade de ver o mundo de uma nova perspectiva."</p>
       </div>
@@ -808,7 +818,7 @@
       <h2>Serviços Oferecidos</h2>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+        <div class="bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
           <h3 style="margin-top: 0;">📸 Fotografia Esportiva</h3>
           <p>Captura de momentos decisivos em partidas e competições, com foco especial em futsal.</p>
           <ul>
@@ -818,7 +828,7 @@
           </ul>
         </div>
         
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+        <div class="bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
           <h3 style="margin-top: 0;">👤 Retratos em Estúdio</h3>
           <p>Sessões profissionais com iluminação controlada para resultados impressionantes.</p>
           <ul>
@@ -828,7 +838,7 @@
           </ul>
         </div>
         
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+        <div class="bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
           <h3 style="margin-top: 0;">🌆 Paisagens Urbanas</h3>
           <p>Exploração visual de cidades, arquitetura e ambientes urbanos.</p>
           <ul>
@@ -838,7 +848,7 @@
           </ul>
         </div>
         
-        <div style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
+        <div class="bloco-servico" style="background-color: #2d2d2d; padding: 20px; border-radius: 10px; border-top: 4px solid #ffffffa6;">
           <h3 style="margin-top: 0;">🎉 Eventos Sociais</h3>
           <p>Cobertura completa de casamentos, formaturas e eventos corporativos.</p>
           <ul>
@@ -927,7 +937,7 @@
       
       <div id="resultado"></div>
       
-      <div style="margin-top: 40px; background-color: #2d2d2d; padding: 20px; border-radius: 10px;">
+      <div class="bloco-contato" style="margin-top: 40px; background-color: #2d2d2d; padding: 20px; border-radius: 10px;">
         <h3 style="margin-top: 0;">Outras Formas de Contato</h3>
         <p><strong>WhatsApp:</strong> <a href="https://wa.me/5563984730600" style="color: #ffffffa6;">(63) 98473-0600</a></p>
         <p><strong>E-mail:</strong> <a href="mailto:stanleybelemcosta30@gmail.com" style="color: #ffffffa6;">stanleybelemcosta30@gmail.com</a></p>
@@ -972,7 +982,7 @@
         </form>
       </section>
     </div>
-    <div style="margin-top: 30px; text-align: center; width: 100%;">
+    <div class="bloco-contato" style="margin-top: 30px; text-align: center; width: 100%;">
       <p>&copy; 2025 Stanley Belém Costa. Todos os direitos reservados.</p>
     </div>
   </footer>
