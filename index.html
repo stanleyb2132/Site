@@ -565,6 +565,57 @@
       background: #ccc;
     }
     
+    /* Seção de depoimentos */
+    .depoimentos {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 20px 0;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .depoimento {
+      min-width: 300px;
+      background-color: #2d2d2d;
+      padding: 20px;
+      border-radius: 10px;
+      scroll-snap-align: start;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .modo-claro .depoimento {
+      background-color: #f0f0f0;
+    }
+    
+    .depoimento .cliente {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .depoimento .cliente img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .depoimento .cliente h4 {
+      margin: 0;
+      color: #fff;
+    }
+    .modo-claro .depoimento .cliente h4 {
+      color: #333;
+    }
+    
+    .depoimento .texto {
+      font-style: italic;
+      color: #ccc;
+    }
+    .modo-claro .depoimento .texto {
+      color: #666;
+    }
+    
     /* Seção de FAQ */
     .faq-item {
       margin-bottom: 15px;
@@ -613,7 +664,7 @@
     .faq-pergunta::after {
       content: '+';
       font-size: 1.2em;
-}
+    }
   </style>
 </head>
 <body>
@@ -1133,7 +1184,7 @@
           descricao: 'Momento decisivo em uma partida de futsal'
         },
         {
-          img: 'imagens/23.jpg',
+          img: 'imagens/22.jpg',
           categoria: 'retratos',
           titulo: 'Retrato em Estúdio',
           descricao: 'Sessão profissional com iluminação controlada'
@@ -1151,13 +1202,19 @@
           descricao: 'Cores do entardecer na cidade'
         },
         {
+          img: 'imagens/25.jpg',
+          categoria: 'retratos',
+          titulo: 'Retrato em Estúdio',
+          descricao: 'Sessão profissional com iluminação controlada'
+        },
+        {
           img: 'imagens/10.jpg',
           categoria: 'esportes',
           titulo: 'Salto em Ação',
           descricao: 'Atleta em movimento durante competição'
         },
         {
-          img: 'imagens/123.jpg',
+          img: 'imagens/23.jpg',
           categoria: 'retratos',
           titulo: 'Expressão Intensa',
           descricao: 'Retrato conceitual em preto e branco'
@@ -1167,6 +1224,12 @@
           categoria: 'esportes',
           titulo: 'Ação no Futsal',
           descricao: 'Momento decisivo em uma partida de futsal'
+        },
+        {
+          img: 'imagens/24.jpg',
+          categoria: 'retratos',
+          titulo: 'Retrato em Estúdio',
+          descricao: 'Sessão profissional com iluminação controlada'
         },
         {
           img: 'imagens/12.jpg',
