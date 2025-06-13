@@ -932,7 +932,7 @@
           <div id="erro-mensagem" class="erro">Por favor, insira sua mensagem</div>
         </div>
         
-        <button type="submit">Enviar Mensagem</button>
+       <button type="submit" onclick="return validar()">Enviar Mensagem</button>
       </form>
       
       <div id="resultado"></div>
@@ -947,6 +947,8 @@
           <a href="https://www.banlek.com/stanleybc" target="_blank" style="color: #ffffffa6;">Banlek</a>
         </p>
       </div>
+
+      <script src="script.js"></script>
     </section>
   </main>
   
@@ -1033,95 +1035,7 @@
       document.body.classList.toggle('modo-claro');
       localStorage.setItem('modo-claro', document.body.classList.contains('modo-claro'));
     }
-    
-    // Verificar preferência salva
-    if (localStorage.getItem('modo-claro') === 'true') {
-      document.body.classList.add('modo-claro');
-    }
-    
-    // Validação do formulário de contato
-    document.getElementById('formContato').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Resetar erros e estilos
-      document.querySelectorAll('.erro').forEach(el => {
-        el.style.display = 'none';
-      });
-      document.querySelectorAll('#formContato input, #formContato textarea, #formContato select').forEach(el => {
-        el.classList.remove('input-invalido');
-      });
-      
-      // Validar campos
-      let valido = true;
-      const nome = document.getElementById('nome').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const telefone = document.getElementById('telefone').value.trim();
-      const assunto = document.getElementById('assunto').value;
-      const mensagem = document.getElementById('mensagem').value.trim();
-      
-      // Validar nome
-      if (nome === '') {
-        document.getElementById('erro-nome').style.display = 'block';
-        document.getElementById('nome').classList.add('input-invalido');
-        valido = false;
-      }
-      
-      // Validar email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        document.getElementById('erro-email').style.display = 'block';
-        document.getElementById('email').classList.add('input-invalido');
-        valido = false;
-      }
-      
-      // Validar telefone (se preenchido)
-      if (telefone && !/^\(\d{2}\) \d{5}-\d{4}$/.test(telefone)) {
-        document.getElementById('erro-telefone').style.display = 'block';
-        document.getElementById('telefone').classList.add('input-invalido');
-        valido = false;
-      }
-      
-      // Validar assunto
-      if (assunto === '') {
-        document.getElementById('erro-assunto').style.display = 'block';
-        document.getElementById('assunto').classList.add('input-invalido');
-        valido = false;
-      }
-      
-      // Validar mensagem
-      if (mensagem === '') {
-        document.getElementById('erro-mensagem').style.display = 'block';
-        document.getElementById('mensagem').classList.add('input-invalido');
-        valido = false;
-      }
-      
-      // Se tudo estiver válido, simular envio
-      if (valido) {
-        const resultado = document.getElementById('resultado');
-        resultado.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
-        resultado.className = 'sucesso';
-        resultado.style.display = 'block';
-        
-        // Adicionar animação de confirmação
-        document.getElementById('formContato').classList.add('enviado');
-        setTimeout(() => {
-          document.getElementById('formContato').classList.remove('enviado');
-        }, 1500);
-        
-        // Limpar formulário
-        document.getElementById('formContato').reset();
-        
-        // Esconder mensagem após 5 segundos
-        setTimeout(() => {
-          resultado.style.display = 'none';
-        }, 5000);
-      } else {
-        const resultado = document.getElementById('resultado');
-        resultado.textContent = 'Por favor, corrija os erros no formulário.';
-        resultado.className = 'falha';
-        resultado.style.display = 'block';
-      }
-    });
+
     
     // Validação em tempo real para o email
     document.getElementById('email').addEventListener('blur', function() {
